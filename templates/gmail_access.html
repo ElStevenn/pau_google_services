@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Google OAuth Sign-in Button</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f7f7f7;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .headline {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .google-btn {
+        background-color: #4285F4;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none; /* Remove underline from anchors */
+    }
+
+    .google-btn:hover {
+        background-color: #357ae8;
+    }
+
+    .google-icon {
+        width: 20px;
+        margin-right: 10px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1 class="headline">Sign in with Google</h1>
+    <!-- Link the button to your authorization URL -->
+    <a href="/authorize" class="google-btn">
+        <img src="https://banner2.cleanpng.com/20180324/sww/kisspng-google-logo-g-suite-chrome-5ab6e618b3b2c3.5810634915219358967361.jpg" class="google-icon" alt="Google Logo"/>
+        Sign in with Google
+    </a>
+</div>
+</body>
+</html>

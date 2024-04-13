@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Google OAuth Sign-in Button</title>
+<style>
+    .google-btn {
+        background-color: #4285F4;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+    }
+
+    .google-btn:hover {
+        background-color: #357ae8;
+    }
+
+    .google-icon {
+        width: 20px;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+</style>
+</head>
+<body>
+<h1>Hello! If you are here is for something :)</h1>
+<title>My Application</title>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    {% block body %}{% endblock %}
+
+</body>
+</html>

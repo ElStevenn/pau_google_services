@@ -1,0 +1,5 @@
+
+# Replace all its file with the needed json documents
+credentials/gmail/*
+credentials/excel/*
+.env
