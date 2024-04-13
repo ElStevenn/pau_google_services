@@ -12,10 +12,6 @@ CLIENT_SECRETS_FILE = "credentials/gmail/client_secret.json"
 
 @app.route('/')
 def index():
-    return render_template('index.html')
-
-@app.route('/gmail', methods=['GET', 'POST'])
-def get_gmail_token():
     return render_template('gmail_access.html')
 
 @app.route('/authorize')
