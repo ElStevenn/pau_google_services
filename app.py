@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 # from .services import gmail_acess
 import google.oauth2.credentials
 import google_auth_oauthlib.flow
-import os
+import os, json
 from flask import send_from_directory
 
 app = Flask(__name__)
@@ -17,23 +17,30 @@ def index():
 
 @app.route('/authorize')
 def authorize():
-    # Create a flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
-    flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-        CLIENT_SECRETS_FILE,
-        scopes=SCOPES)
+    try:
+        # Create a flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
+        flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+            CLIENT_SECRETS_FILE,
+            scopes=SCOPES)
 
-    # The URI created here must exactly match one of the authorized redirect URIs for the OAuth 2.0 client, which you configured in the API Console.
-    flow.redirect_uri = url_for('oauth2callback', _external=True)
+        # The URI created here must exactly match one of the authorized redirect URIs for the OAuth 2.0 client, which you configured in the API Console.
+        flow.redirect_uri = url_for('oauth2callback', _external=True)
 
-    authorization_url, state = flow.authorization_url(
-        access_type='offline',
-        include_granted_scopes='true',
-        prompt='consent')
+        authorization_url, state = flow.authorization_url(
+            access_type='offline',
+            include_granted_scopes='true',
+            prompt='consent')
 
-    # Store the state so the callback can verify the auth server response.
-    session['state'] = state
+        # Store the state so the callback can verify the auth server response.
+        session['state'] = state
 
-    return redirect(authorization_url)
+        return redirect(authorization_url)
+    except json.JSONDecodeError as json_error:
+        print("JSON Decode Error:", json_error)
+        return "JSON Decode Error: " + str(json_error), 500
+    except Exception as e:
+        print("General Error:", e)
+        return "An error occurred: " + str(e), 500
 
 @app.route('/oauth2callback')
 def oauth2callback():
@@ -48,7 +55,7 @@ def oauth2callback():
     flow.fetch_token(authorization_response=authorization_response)
 
     credentials = flow.credentials
-    session['credentials'] = {
+    credentials = {
         'token': credentials.token,
         'refresh_token': credentials.refresh_token,
         'token_uri': credentials.token_uri,
@@ -56,8 +63,10 @@ def oauth2callback():
         'client_secret': credentials.client_secret,
         'scopes': credentials.scopes
     }
+    print(flow.credentials)
 
-    flash("Thank you! Everything was ok!")
+
+    flash("Thank you! everything  was perfectly! :D")
     return redirect(url_for('index'))
 
 
