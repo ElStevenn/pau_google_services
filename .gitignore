@@ -3,3 +3,8 @@
 credentials/gmail/*
 credentials/excel/*
 .env
+
+# Ignore certificates and ssl file
+key.pem
+cert.pem
+ssl

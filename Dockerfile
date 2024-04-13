@@ -15,6 +15,7 @@ COPY . .
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
+EXPOSE 443
 
 # Define the command to run the app
 CMD ["python3", "app.py"]

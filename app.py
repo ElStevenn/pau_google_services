@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import google.oauth2.credentials
 import google_auth_oauthlib.flow
 import os
+from flask import send_from_directory
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -60,6 +61,25 @@ def oauth2callback():
     return redirect(url_for('index'))
 
 
+@app.get('/media/<path:path>')
+def send_media(path):
+    """
+    :param path: a path like "posts/<int:post_id>/<filename>"
+    :return:
+    """
+    path_list = path.split('/')
+    path_ = '/'.join(path_list[:-1]) + '/'
+    file_name = path_list[-1]
+    return send_from_directory(
+        directory=app.config['UPLOAD_FOLDER'], path=path_, filename=file_name, as_attachment=True
+    )
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=80)
+
+    # Handle exceptions
+    if not os.path.exists('credentials/gmail/client_secret.json'):
+        raise FileNotFoundError("Client_secret.json file not found in credentials/gmail/ directory") 
+    elif not os.path.exists('cert.pem') and not os.path.exists('key.pem'):
+        raise FileNotFoundError("cert.pem and key.pem files not found in credentials/ directory")
+    
+    app.run(debug=True, host='0.0.0.0', port=443, ssl_context=('cert.pem', 'key.pem'))

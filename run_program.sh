@@ -20,8 +20,7 @@ if docker build -t oauth_image .; then
 
     echo "Running new container..."
     # Run the Docker container in detached mode
-    # Map the host's port 5000 to the container's port 80
-    if docker run -p 80:80 -d --name oauth_container oauth_image; then
+    if docker run -p 443:443 -d --name oauth_container -v $(pwd)/ssl:/ssl oauth_image; then
         echo "Container started. Following logs now:"
         # Follow the logs of the newly started container
         docker logs -f oauth_container
